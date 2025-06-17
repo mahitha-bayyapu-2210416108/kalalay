@@ -1,0 +1,18 @@
+type Artwork {
+  id: ID!
+  title: String!
+  imageUrl: String!
+  shortDescription: String!
+  fullDescription: String!
+  likes: Int!
+  createdAt: String!
+}
+
+type Query {
+  allArtworks: [Artwork]
+  artwork(id: ID!): Artwork
+}
+
+type Mutation {
+  likeArtwork(id: ID!): Artwork
+}
