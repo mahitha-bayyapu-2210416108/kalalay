@@ -1,26 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="p-4">
+    <h1>Kalālay Artworks</h1>
+    <div v-if="loading">Loading...</div>
+    <div v-else-if="error">Error loading artworks.</div>
+    <ul>
+      <li v-for="art in data?.allArtworks" :key="art.id">
+        <strong>{{ art.title }}</strong> — Likes: {{ art.likes }}
+        <button @click="like(art.id)">❤️</button>
+      </li>
+    </ul>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { useQuery, useMutation } from '@vue/apollo-composable';
+import { GET_ALL_ARTWORKS, LIKE_ARTWORK } from './graphql/queries';
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const { result: data, loading, error, refetch } = useQuery(GET_ALL_ARTWORKS);
+const { mutate: likeArtwork } = useMutation(LIKE_ARTWORK);
+
+const like = async (id) => {
+  await likeArtwork({ id });
+  refetch();
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
