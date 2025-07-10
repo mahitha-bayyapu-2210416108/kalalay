@@ -1,0 +1,36 @@
+type Artwork {
+  id: ID!
+  title: String
+  shortDescription: String
+  fullDescription: String
+  imageUrl: String
+  likes: Int
+  createdAt: String
+}
+
+type Query {
+  allArtworks: [Artwork]
+  artwork(id: ID!): Artwork
+  searchArtworks(query: String!): [Artwork]
+}
+
+type Mutation {
+  likeArtwork(id: ID!): Artwork
+
+  addArtwork(
+    title: String!,
+    imageUrl: String,
+    shortDescription: String,
+    fullDescription: String
+  ): Artwork
+  deleteArtwork(id: ID!): Boolean
+
+  updateArtwork(
+    id: ID!,
+    title: String,
+    imageUrl: String,
+    shortDescription: String,
+    fullDescription: String
+  ): Artwork
+}
+
